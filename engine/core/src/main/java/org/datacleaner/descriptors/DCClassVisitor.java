@@ -20,10 +20,10 @@
 package org.datacleaner.descriptors;
 
 import java.lang.annotation.Annotation;
+import java.util.function.Predicate;
 
 import javax.inject.Named;
 
-import org.apache.metamodel.util.Predicate;
 import org.apache.metamodel.util.TruePredicate;
 import org.datacleaner.api.Analyzer;
 import org.datacleaner.api.Filter;
@@ -94,7 +94,7 @@ final class DCClassVisitor extends ClassVisitor {
                         return;
                     }
 
-                    final Boolean proceed = _renderingFormatPredicate.eval(renderingFormatClass);
+                    final Boolean proceed = _renderingFormatPredicate.test(renderingFormatClass);
                     if (proceed == null || !proceed.booleanValue()) {
                         logger.info("Skipping renderer because it's format was not accepted by predicate: {}", _name);
                         return;

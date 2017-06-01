@@ -98,7 +98,7 @@ public class SparkJobContext implements Serializable {
             // this is a pretty ugly way to go back to the bytes to read the
             // properties - but works and is quick
             _customProperties =
-                    new InputStreamToPropertiesMapFunc().eval(new ByteArrayInputStream(propertiesString.getBytes()));
+                    new InputStreamToPropertiesMapFunc().apply(new ByteArrayInputStream(propertiesString.getBytes()));
         }
         validateCustomProperties();
     }

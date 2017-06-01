@@ -61,16 +61,18 @@ public class SampleDataContext extends QueryPostprocessDataContext {
     @Override
     protected DataSet materializeMainSchemaTable(final Table table, final Column[] columns, final int maxRows) {
         final SelectItem[] tableSelectItems = MetaModelHelper.createSelectItems(table.getColumns());
+        final SimpleDataSetHeader tableHeader = new SimpleDataSetHeader(tableSelectItems);
+
         final SelectItem[] selectItems = MetaModelHelper.createSelectItems(columns);
-        final SimpleDataSetHeader header = new SimpleDataSetHeader(tableSelectItems);
+        final SimpleDataSetHeader selectItemHeader = new SimpleDataSetHeader(selectItems);
 
         final List<Row> rows = new ArrayList<>();
 
-        rows.add(new DefaultRow(header, new Object[] { 1, "hello" }).getSubSelection(selectItems));
-        rows.add(new DefaultRow(header, new Object[] { 2, "there" }).getSubSelection(selectItems));
-        rows.add(new DefaultRow(header, new Object[] { 3, "big" }).getSubSelection(selectItems));
-        rows.add(new DefaultRow(header, new Object[] { 4, "wide" }).getSubSelection(selectItems));
-        rows.add(new DefaultRow(header, new Object[] { 5, "world" }).getSubSelection(selectItems));
+        rows.add(new DefaultRow(tableHeader, new Object[] { 1, "hello" }).getSubSelection(selectItemHeader));
+        rows.add(new DefaultRow(tableHeader, new Object[] { 2, "there" }).getSubSelection(selectItemHeader));
+        rows.add(new DefaultRow(tableHeader, new Object[] { 3, "big" }).getSubSelection(selectItemHeader));
+        rows.add(new DefaultRow(tableHeader, new Object[] { 4, "wide" }).getSubSelection(selectItemHeader));
+        rows.add(new DefaultRow(tableHeader, new Object[] { 5, "world" }).getSubSelection(selectItemHeader));
 
         return new InMemoryDataSet(rows);
     }

@@ -33,6 +33,8 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -40,8 +42,6 @@ import javax.inject.Named;
 
 import org.apache.metamodel.util.ExclusionPredicate;
 import org.apache.metamodel.util.FileHelper;
-import org.apache.metamodel.util.Predicate;
-import org.apache.metamodel.util.Ref;
 import org.apache.metamodel.util.TruePredicate;
 import org.datacleaner.api.Analyzer;
 import org.datacleaner.api.Filter;
@@ -452,7 +452,7 @@ public final class ClasspathScanDescriptorProvider extends AbstractDescriptorPro
 
         while (entries.hasMoreElements()) {
             final JarEntry entry = entries.nextElement();
-            final Ref<InputStream> entryInputStream = () -> {
+            final Supplier<InputStream> entryInputStream = () -> {
                 try {
                     return jarFile.getInputStream(entry);
                 } catch (final IOException e) {
@@ -464,7 +464,7 @@ public final class ClasspathScanDescriptorProvider extends AbstractDescriptorPro
     }
 
     private void scanEntry(final JarEntry entry, final String packagePath, final boolean recursive,
-            final ClassLoader classLoader, final boolean strictClassLoader, final Ref<InputStream> entryInputStream)
+            final ClassLoader classLoader, final boolean strictClassLoader, final Supplier<InputStream> entryInputStream)
             throws IOException {
         final String entryName = entry.getName();
         if (isClassInPackage(entryName, packagePath, recursive)) {

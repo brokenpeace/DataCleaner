@@ -20,8 +20,8 @@
 package org.datacleaner.monitor.wizard;
 
 import java.util.Locale;
+import java.util.function.Function;
 
-import org.apache.metamodel.util.Func;
 import org.datacleaner.monitor.configuration.TenantContext;
 
 /**
@@ -48,5 +48,5 @@ public interface WizardContext {
      *
      * @return
      */
-    Func<String, Object> getHttpSession();
+    Function<String, Object> getHttpSession();
 }

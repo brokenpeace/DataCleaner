@@ -41,6 +41,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.metamodel.AbstractDataContext;
 import org.apache.metamodel.UpdateScript;
+import org.apache.metamodel.UpdateSummary;
 import org.apache.metamodel.UpdateableDataContext;
 import org.apache.metamodel.data.DataSet;
 import org.apache.metamodel.query.Query;
@@ -95,9 +96,10 @@ public class DataHubDataContext extends AbstractDataContext implements Updateabl
     }
 
     @Override
-    public void executeUpdate(final UpdateScript script) {
+    public UpdateSummary executeUpdate(final UpdateScript script) {
         try (DataHubUpdateCallback callback = new DataHubUpdateCallback(this)) {
             script.run(callback);
+            return callback.getUpdateSummary();
         } catch (final RuntimeException e) {
             throw e;
         }

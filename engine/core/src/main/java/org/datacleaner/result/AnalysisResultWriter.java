@@ -21,8 +21,8 @@ package org.datacleaner.result;
 
 import java.io.OutputStream;
 import java.io.Writer;
+import java.util.function.Supplier;
 
-import org.apache.metamodel.util.Ref;
 import org.datacleaner.configuration.DataCleanerConfiguration;
 
 /**
@@ -31,6 +31,6 @@ import org.datacleaner.configuration.DataCleanerConfiguration;
  */
 public interface AnalysisResultWriter {
 
-    void write(AnalysisResult result, DataCleanerConfiguration configuration, Ref<Writer> writerRef,
-            Ref<OutputStream> outputStreamRef) throws Exception;
+    void write(AnalysisResult result, DataCleanerConfiguration configuration, Supplier<Writer> writerRef,
+            Supplier<OutputStream> outputStreamRef) throws Exception;
 }
